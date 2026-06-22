@@ -1,4 +1,5 @@
 // CONFIG VAR
+require('dotenv').config({ quiet: true });
 const config = require('./config');
 const PORT = config.PORT;
 const NODE_ENV = config.NODE_ENV;
@@ -10,7 +11,9 @@ app.set('trust proxy', 1);
 
 // MIDDLEWARE VAR
 const helmet = require('helmet');
-const { rateLimit } = require('express-rate-limit');
+
+const { calmLimiter, defaultLimiter, strictLimiter } = require('./middleware/rateLimiters');
+
 const cors = require('cors');
 const allowedOrigins = [
     'http://localhost:5050'
@@ -18,6 +21,10 @@ const allowedOrigins = [
 
 // ROUTES VAR
 const docsRoutes = require('./routes/docsRoutes');
+const authRoutes = require('./routes/authRoutes');
+
+// DB VAR
+const db = require('./db/db');
 
 // EXPRESS
 app.use(express.json());
@@ -25,15 +32,7 @@ app.use(express.json());
 // MIDDLEWARE
 app.use(helmet());
 
-const limiter = rateLimit({
-    windowMs: 15 * 60000, // 15min
-    limit: 100,
-    message: {
-        status: 429,
-        error: 'Too many requests!'
-    }
-});
-app.use(limiter);
+app.use(defaultLimiter);
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -53,9 +52,16 @@ app.use(cors({
 }));
 
 // ROUTES
-app.use("/", docsRoutes);
+app.use('/', calmLimiter, docsRoutes);
+
+app.use('/auth', strictLimiter, authRoutes);
 
 // START
-app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
-});
+async function start() {
+    await db.createUsersTable();
+
+    app.listen(PORT, () => {
+        console.log(`http://localhost:${PORT}`);
+    });
+};
+start();
