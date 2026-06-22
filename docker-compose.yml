@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    command: npm run dev 
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
