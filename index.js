@@ -22,6 +22,7 @@ const allowedOrigins = [
 // ROUTES VAR
 const docsRoutes = require('./routes/docsRoutes');
 const authRoutes = require('./routes/authRoutes');
+const usersRoutes = require('./routes/usersRoutes');
 
 // DB VAR
 const db = require('./db/db');
@@ -55,6 +56,8 @@ app.use(cors({
 app.use('/', calmLimiter, docsRoutes);
 
 app.use('/auth', strictLimiter, authRoutes);
+
+app.use('/users', usersRoutes);
 
 // START
 async function start() {
