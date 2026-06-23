@@ -1,3 +1,14 @@
+exports.dropProducts_IngredientsTable = async(pool) => {
+    const query = 'DROP TABLE IF EXISTS products_ingredients';
+
+    try{
+        await pool.query(query);
+    }catch(err){
+        console.log(err.message);
+        process.exit(1);
+    }
+}
+
 exports.createProducts_IngredientsTable = async (pool) => {
     const query = `
     CREATE TABLE IF NOT EXISTS products_ingredients (
@@ -12,6 +23,19 @@ exports.createProducts_IngredientsTable = async (pool) => {
     try{
         await pool.query(query);
     }catch(err){
+        console.log(err.message);
+        process.exit(1);
+    }
+}
+
+exports.createProducts_IngredientsData = async (pool) => {
+    const query = `
+    INSERT INTO products_ingredients(product_id, ingredient_id, sort_order) VALUES
+        (1, 1, 1);`;
+
+    try {
+        await pool.query(query);
+    } catch (err) {
         console.log(err.message);
         process.exit(1);
     }

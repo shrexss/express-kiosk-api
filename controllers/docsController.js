@@ -21,7 +21,32 @@ const docs = {
             "method": "GET",
             "path": ".../tables/reset_categories",
             "description": "reset categories to default data (requires jwt)"
-        }
+        },
+        {
+            "method": "GET",
+            "path": ".../tables/reset_meals",
+            "description": "reset meals to default data (requires jwt)"
+        },
+        {
+            "method": "GET",
+            "path": ".../tables/reset_products",
+            "description": "reset products to default data (requires jwt)"
+        },
+        {
+            "method": "GET",
+            "path": ".../tables/reset_ingredients",
+            "description": "reset ingredients to default data (requires jwt)"
+        },
+        {
+            "method": "GET",
+            "path": ".../tables/reset_meals_products",
+            "description": "reset meals_products to default data (requires jwt)"
+        },
+        {
+            "method": "GET",
+            "path": ".../tables/reset_products_ingredients",
+            "description": "reset products_ingredients to default data (requires jwt)"
+        },
     ],
     "users": [
         {
@@ -125,7 +150,89 @@ const docs = {
             "path": ".../products/{id}",
             "description": "delete one product (requires jwt)"
         }
-    ]
+    ],
+    "ingredients": [
+        {
+            "method": "GET",
+            "path": ".../ingredients",
+            "description": "return all ingredients"
+        },
+        {
+            "method": "GET",
+            "path": ".../ingredients/{id}",
+            "description": "return one ingredient"
+        },
+        {
+            "method": "POST",
+            "path": ".../ingredients",
+            "description": "create a new ingredient (requires jwt)"
+        },
+        {
+            "method": "PATCH",
+            "path": ".../ingredients/{id}",
+            "description": "update one ingredient (requires jwt)"
+        },
+        {
+            "method": "DELETE",
+            "path": ".../ingredients/{id}",
+            "description": "delete one ingredient (requires jwt)"
+        }
+    ],
+    "meals_products": [
+        {
+            "method": "GET",
+            "path": ".../meals_products",
+            "description": "return all meals_products"
+        },
+        {
+            "method": "GET",
+            "path": ".../meals_products/{id}",
+            "description": "return one meals_products"
+        },
+        {
+            "method": "POST",
+            "path": ".../meals_products",
+            "description": "create a new meals_products (requires jwt)"
+        },
+        {
+            "method": "PATCH",
+            "path": ".../meals_products/{id}",
+            "description": "update one meals_products (requires jwt)"
+        },
+        {
+            "method": "DELETE",
+            "path": ".../meals_products/{id}",
+            "description": "delete one meals_products (requires jwt)"
+        }
+    ],
+    "products_ingredients": [
+        {
+            "method": "GET",
+            "path": ".../products_ingredients",
+            "description": "return all products_ingredients"
+        },
+        {
+            "method": "GET",
+            "path": ".../products_ingredients/{id}",
+            "description": "return one products_ingredients"
+        },
+        {
+            "method": "POST",
+            "path": ".../products_ingredients",
+            "description": "create a new products_ingredients (requires jwt)"
+        },
+        {
+            "method": "PATCH",
+            "path": ".../products_ingredients/{id}",
+            "description": "update one products_ingredients (requires jwt)"
+        },
+        {
+            "method": "DELETE",
+            "path": ".../products_ingredients/{id}",
+            "description": "delete one products_ingredients (requires jwt)"
+        }
+    ],
+
 }
 
 exports.getDocs = (req, res) => {

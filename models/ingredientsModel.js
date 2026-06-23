@@ -1,3 +1,14 @@
+exports.dropIngredientsTable = async(pool) => {
+    const query = 'DROP TABLE IF EXISTS ingredients';
+
+    try{
+        await pool.query(query);
+    }catch(err){
+        console.log(err.message);
+        process.exit(1);
+    }
+}
+
 exports.createIngredientsTable = async (pool) => {
     const query = `
     CREATE TABLE IF NOT EXISTS ingredients (
@@ -13,3 +24,16 @@ exports.createIngredientsTable = async (pool) => {
         process.exit(1);
     }
 }
+
+exports.createIngredientsData = async (pool) => {
+    const query = `
+    INSERT INTO ingredients(name, image_path) VALUES
+        ('ingredient name', '.png');`;
+
+    try {
+        await pool.query(query);
+    } catch (err) {
+        console.log(err.message);
+        process.exit(1);
+    }
+} 

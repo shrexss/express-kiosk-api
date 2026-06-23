@@ -1,3 +1,14 @@
+exports.dropUsersTable = async(pool) => {
+    const query = 'DROP TABLE IF EXISTS users';
+
+    try{
+        await pool.query(query);
+    }catch(err){
+        console.log(err.message);
+        process.exit(1);
+    }
+}
+
 exports.createUsersTable = async (pool) => {
     const query = `
     CREATE TABLE IF NOT EXISTS users (

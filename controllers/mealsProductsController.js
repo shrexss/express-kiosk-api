@@ -1,8 +1,8 @@
 const pool = require('../db/db');
 
-exports.getAllMeals = async (req, res) => {
+exports.getAllMealsProducts = async (req, res) => {
     try{
-        const [rows] = await pool.execute('SELECT * FROM meals');
+        const [rows] = await pool.execute('SELECT * FROM meals_products');
 
         return res.status(200).json(rows);
     }catch(err){
@@ -10,17 +10,17 @@ exports.getAllMeals = async (req, res) => {
     }
 }
 
-exports.getMeal = async (req, res) => {
+exports.getMealsProducts = async (req, res) => {
     try{
         const { id } = req.params;
         if (!id){
             return res.status(400).json({ error: 'Missing ID' });
         }
 
-        const [rows] = await pool.execute('SELECT * FROM meals WHERE id = ?', [id]);
+        const [rows] = await pool.execute('SELECT * FROM meals_products WHERE id = ?', [id]);
 
         if (rows.length === 0) {
-            return res.status(404).json({ error: 'Meal not found' });
+            return res.status(404).json({ error: 'meals_products not found' });
         }
 
         return res.status(200).json(rows[0]);
@@ -29,7 +29,7 @@ exports.getMeal = async (req, res) => {
     }
 }
 
-exports.updateMeal = async (req, res) => {
+exports.updateMealsProducts = async (req, res) => {
     try{
         const { id } = req.params;
         if (!id){
@@ -47,33 +47,33 @@ exports.updateMeal = async (req, res) => {
         const setValues = Object.values(updates);
         setValues.push(id);
 
-        const [result] = await pool.execute(`UPDATE meals SET ${setFields} WHERE id = ?`, setValues);
+        const [result] = await pool.execute(`UPDATE meals_products SET ${setFields} WHERE id = ?`, setValues);
 
         if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'Meal not found' });
+            return res.status(404).json({ error: 'meals_products not found' });
         }
 
-        return res.status(200).json({ message: 'Meal updated succesfully' });
+        return res.status(200).json({ message: 'meals_products updated succesfully' });
     }catch(err){
         console.log(err);
         return res.status(500).json( { error: 'Internal server error'})
     }
 }
 
-exports.deleteMeal = async (req, res) => {
+exports.deleteMealsProducts = async (req, res) => {
     try{
         const { id } = req.params;
         if (!id){
             return res.status(400).json({ error: 'Missing ID' });
         }
 
-        const [result] = await pool.execute(`DELETE FROM meals WHERE id = ?`, [id]);
+        const [result] = await pool.execute(`DELETE FROM meals_products WHERE id = ?`, [id]);
 
         if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'Meal not found' });
+            return res.status(404).json({ error: 'meals_products not found' });
         }
 
-        return res.status(200).json({ message: 'Meal deleted succesfully' });
+        return res.status(200).json({ message: 'meals_products deleted succesfully' });
     }catch(err){
         return res.status(500).json( { error: 'Internal server error'})
     }

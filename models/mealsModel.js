@@ -1,3 +1,14 @@
+exports.dropMealsTable = async(pool) => {
+    const query = 'DROP TABLE IF EXISTS meals';
+
+    try{
+        await pool.query(query);
+    }catch(err){
+        console.log(err.message);
+        process.exit(1);
+    }
+}
+
 exports.createMealsTable = async (pool) => {
     const query = `
         CREATE TABLE IF NOT EXISTS meals (
@@ -9,6 +20,19 @@ exports.createMealsTable = async (pool) => {
             sort_order INT NOT NULL,
             CONSTRAINT meals_category_id_foreign FOREIGN KEY(category_id) REFERENCES categories(id)
         );`;
+
+    try {
+        await pool.query(query);
+    } catch (err) {
+        console.log(err.message);
+        process.exit(1);
+    }
+}
+
+exports.createMealsData = async (pool) => {
+    const query = `
+    INSERT INTO meals(category_id, name, image_path, price, sort_order) VALUES
+        (1, 'meal name', '.png', 1.0, 1);`;
 
     try {
         await pool.query(query);

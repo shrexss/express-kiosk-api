@@ -29,6 +29,10 @@ const usersRoutes = require('./routes/usersRoutes');
 const tablesRoutes = require('./routes/tablesRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
 const mealsRoutes = require('./routes/mealsRoutes');
+const productsRoutes = require('./routes/productsRoutes');
+const ingredientsRoutes = require('./routes/ingredientsRoutes');
+const mealsProductsRoutes = require('./routes/mealsProductsRoutes');
+const productsIngredientsRoutes = require('./routes/productsIngredientsRoutes');
 
 // EXPRESS
 app.use(express.json());
@@ -60,8 +64,13 @@ app.use('/', calmLimiter, docsRoutes);
 app.use('/auth', strictLimiter, authRoutes);
 app.use('/users', usersRoutes);
 app.use('/tables', tablesRoutes);
+
 app.use('/categories', categoriesRoutes);
 app.use('/meals', mealsRoutes);
+app.use('/products', productsRoutes);
+app.use('/ingredients', ingredientsRoutes);
+app.use('/meals_products', mealsProductsRoutes);
+app.use('/products_ingredients', productsIngredientsRoutes);
 
 // START
 app.listen(PORT, () => {

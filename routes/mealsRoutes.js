@@ -9,6 +9,4 @@ router.get('/:id', mealsController.getMeal);
 router.patch('/:id', checkJWT, mealsController.updateMeal);
 router.delete('/:id', checkJWT, mealsController.deleteMeal);
 
-router.get('/reset', checkJWT, mealsController.resetMeals);
-
 module.exports = router;
