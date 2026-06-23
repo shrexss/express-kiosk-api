@@ -1,4 +1,11 @@
-const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME } = require('../config');   
+const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME } = require('../config');
+const { createUsersTable } = require('../models/usersModel');
+const { createCategoriesTable } = require('../models/categoriesModel');
+const { createMealsTable } = require('../models/mealsModel');
+const { createProductsTable } = require('../models/productsModel');
+const { createIngredientsTable } = require('../models/ingredientsModel');
+const { createMeals_ProductsTable } = require('../models/mealsProductsModel');
+const { createProducts_IngredientsTable } = require('../models/productsIngredientsModel');
 const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
@@ -13,24 +20,20 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-async function createUsersTable(){
-    const usersTable = `
-    CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(50) NOT NULL UNIQUE,
-        password_hash VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );`;
-
+async function initDB(){
     try{
-        await pool.query(usersTable);
+        await createUsersTable(pool);
+        await createCategoriesTable(pool);
+        await createMealsTable(pool);
+        await createProductsTable(pool);
+        await createIngredientsTable(pool);
+        await createMeals_ProductsTable(pool);
+        await createProducts_IngredientsTable(pool);
     }catch(err){
         console.log(err.message);
         process.exit(1);
     }
 }
+initDB();
 
-module.exports = {
-    pool,
-    createUsersTable
-};
+module.exports = pool;

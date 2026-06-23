@@ -4,6 +4,9 @@ const config = require('./config');
 const PORT = config.PORT;
 const NODE_ENV = config.NODE_ENV;
 
+// DB VAR
+require('./db/db');
+
 // EXPRESS VAR
 const express = require('express');
 const app = express();
@@ -23,9 +26,9 @@ const allowedOrigins = [
 const docsRoutes = require('./routes/docsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const usersRoutes = require('./routes/usersRoutes');
-
-// DB VAR
-const db = require('./db/db');
+const tablesRoutes = require('./routes/tablesRoutes');
+const categoriesRoutes = require('./routes/categoriesRoutes');
+const mealsRoutes = require('./routes/mealsRoutes');
 
 // EXPRESS
 app.use(express.json());
@@ -54,17 +57,13 @@ app.use(cors({
 
 // ROUTES
 app.use('/', calmLimiter, docsRoutes);
-
 app.use('/auth', strictLimiter, authRoutes);
-
 app.use('/users', usersRoutes);
+app.use('/tables', tablesRoutes);
+app.use('/categories', categoriesRoutes);
+app.use('/meals', mealsRoutes);
 
 // START
-async function start() {
-    await db.createUsersTable();
-
-    app.listen(PORT, () => {
-        console.log(`http://localhost:${PORT}`);
-    });
-};
-start();
+app.listen(PORT, () => {
+    console.log(`working on port ${PORT}`);
+});

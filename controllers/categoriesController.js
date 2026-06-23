@@ -1,8 +1,8 @@
 const pool = require('../db/db');
 
-exports.getAllUsers = async (req, res) => {
+exports.getAllCategories = async (req, res) => {
     try{
-        const [rows] = await pool.execute('SELECT id, username, created_at FROM users');
+        const [rows] = await pool.execute('SELECT * FROM categories');
 
         return res.status(200).json(rows);
     }catch(err){
@@ -10,17 +10,17 @@ exports.getAllUsers = async (req, res) => {
     }
 }
 
-exports.getUser = async (req, res) => {
+exports.getCategorie = async (req, res) => {
     try{
         const { id } = req.params;
         if (!id){
             return res.status(400).json({ error: 'Missing ID' });
         }
 
-        const [rows] = await pool.execute('SELECT id, username, created_at FROM users WHERE id = ?', [id]);
+        const [rows] = await pool.execute('SELECT * FROM categories WHERE id = ?', [id]);
 
         if (rows.length === 0) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'Categorie not found' });
         }
 
         return res.status(200).json(rows[0]);
@@ -29,7 +29,7 @@ exports.getUser = async (req, res) => {
     }
 }
 
-exports.updateUser = async (req, res) => {
+exports.updateCategorie = async (req, res) => {
     try{
         const { id } = req.params;
         if (!id){
@@ -47,33 +47,33 @@ exports.updateUser = async (req, res) => {
         const setValues = Object.values(updates);
         setValues.push(id);
 
-        const [result] = await pool.execute(`UPDATE users SET ${setFields} WHERE id = ?`, setValues);
+        const [result] = await pool.execute(`UPDATE categories SET ${setFields} WHERE id = ?`, setValues);
 
         if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'Categorie not found' });
         }
 
-        return res.status(200).json({ message: 'User updated succesfully' });
+        return res.status(200).json({ message: 'Categorie updated succesfully' });
     }catch(err){
         console.log(err);
         return res.status(500).json( { error: 'Internal server error'})
     }
 }
 
-exports.deleteUser = async (req, res) => {
+exports.deleteCategorie = async (req, res) => {
     try{
         const { id } = req.params;
         if (!id){
             return res.status(400).json({ error: 'Missing ID' });
         }
 
-        const [result] = await pool.execute(`DELETE FROM users WHERE id = ?`, [id]);
+        const [result] = await pool.execute(`DELETE FROM categories WHERE id = ?`, [id]);
 
         if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'Categorie not found' });
         }
 
-        return res.status(200).json({ message: 'User deleted succesfully' });
+        return res.status(200).json({ message: 'Categorie deleted succesfully' });
     }catch(err){
         return res.status(500).json( { error: 'Internal server error'})
     }
