@@ -19,7 +19,8 @@ const { calmLimiter, defaultLimiter, strictLimiter } = require('./middleware/rat
 
 const cors = require('cors');
 const allowedOrigins = [
-    'http://localhost:5050'
+    'http://localhost:5050',
+    'https://kiosk-express-api.onrender.com'
 ];
 
 // ROUTES VAR

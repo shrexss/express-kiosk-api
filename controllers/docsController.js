@@ -18,32 +18,32 @@ const docs = {
             "description": "return all tables and columns in database (requires jwt)"
         },
         {
-            "method": "GET",
+            "method": "POST",
             "path": ".../tables/reset_categories",
             "description": "reset categories to default data (requires jwt)"
         },
         {
-            "method": "GET",
+            "method": "POST",
             "path": ".../tables/reset_meals",
             "description": "reset meals to default data (requires jwt)"
         },
         {
-            "method": "GET",
+            "method": "POST",
             "path": ".../tables/reset_products",
             "description": "reset products to default data (requires jwt)"
         },
         {
-            "method": "GET",
+            "method": "POST",
             "path": ".../tables/reset_ingredients",
             "description": "reset ingredients to default data (requires jwt)"
         },
         {
-            "method": "GET",
+            "method": "POST",
             "path": ".../tables/reset_meals_products",
             "description": "reset meals_products to default data (requires jwt)"
         },
         {
-            "method": "GET",
+            "method": "POST",
             "path": ".../tables/reset_products_ingredients",
             "description": "reset products_ingredients to default data (requires jwt)"
         },
@@ -79,22 +79,22 @@ const docs = {
         {
             "method": "GET",
             "path": ".../categories/{id}",
-            "description": "return one categorie"
+            "description": "return one category"
         },
         {
             "method": "POST",
             "path": ".../categories",
-            "description": "create a new categorie (requires jwt)"
+            "description": "create a new category (requires jwt)"
         },
         {
             "method": "PATCH",
             "path": ".../categories/{id}",
-            "description": "update one categorie (requires jwt)"
+            "description": "update one category (requires jwt)"
         },
         {
             "method": "DELETE",
             "path": ".../categories/{id}",
-            "description": "delete one categorie (requires jwt)"
+            "description": "delete one category (requires jwt)"
         },
     ],
     "meals": [
