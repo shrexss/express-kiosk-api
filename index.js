@@ -20,7 +20,6 @@ const { calmLimiter, defaultLimiter, strictLimiter } = require('./middleware/rat
 const cors = require('cors');
 const allowedOrigins = [
     'http://localhost:5050',
-    'https://kiosk-express-api.onrender.com'
 ];
 
 // ROUTES VAR
@@ -45,17 +44,17 @@ app.use(defaultLimiter);
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin){
-            return NODE_ENV === 'development' ? 
-                callback(null, true) : 
-                callback(new Error("Blocked by CORS"));
-        };
+        if (!origin) {
+            return NODE_ENV === 'development' 
+                ? callback(null, true) 
+                : callback(null, false); 
+        }
 
-        if (allowedOrigins.indexOf(origin) !== -1){
+        if (allowedOrigins.includes(origin)) {
             callback(null, true);
-        }else{
-            callback(new Error("Blocked by CORS"))
-        };
+        } else {
+            callback(null, false);
+        }
     },
     credentials: true
 }));
