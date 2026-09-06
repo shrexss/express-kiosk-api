@@ -27,6 +27,7 @@ const docsRoutes = require('./routes/docsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const usersRoutes = require('./routes/usersRoutes');
 const tablesRoutes = require('./routes/tablesRoutes');
+
 const categoriesRoutes = require('./routes/categoriesRoutes');
 const mealsRoutes = require('./routes/mealsRoutes');
 const productsRoutes = require('./routes/productsRoutes');
@@ -34,14 +35,14 @@ const ingredientsRoutes = require('./routes/ingredientsRoutes');
 const mealsProductsRoutes = require('./routes/mealsProductsRoutes');
 const productsIngredientsRoutes = require('./routes/productsIngredientsRoutes');
 
+const imagesRoutes = require('./routes/imagesRoutes');
+
 // EXPRESS
 app.use(express.json());
 
 // MIDDLEWARE
 app.use(helmet());
-
 app.use(defaultLimiter);
-
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin) {
@@ -71,6 +72,8 @@ app.use('/products', productsRoutes);
 app.use('/ingredients', ingredientsRoutes);
 app.use('/meals_products', mealsProductsRoutes);
 app.use('/products_ingredients', productsIngredientsRoutes);
+
+app.use('/images', calmLimiter, imagesRoutes);
 
 // START
 app.listen(PORT, () => {
