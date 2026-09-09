@@ -28,19 +28,16 @@ exports.createCategoriesTable = async (pool) => {
 
 exports.createCategoriesData = async (pool) => {
     const query = `
-        INSERT INTO categories(name, image_path, sort_order) VALUES
-            ('Co nowego?', '.png' , 1),
-            ('McZestawy', '.png' , 2),
-            ('Burgery', '.png' , 3),
-            ('McWrapy i Sałatki', '.png' , 4),
-            ('Kurczak', '.png' , 5),
-            ('2 for U', '.png' , 6),
-            ('Frytki i dodatki', '.png' , 7),
-            ('McCafé', '.png' , 8),
-            ('Lody i desery', '.png' , 9),
-            ('Napoje', '.png' , 10),
-            ('Happy Meal', '.png' , 11),
-            ('Śniadania', '.png' , 12);`;
+        INSERT INTO categories (id, name, image_path, sort_order) VALUES
+            (1, 'Burgers', '/assets/categories/burgers.png', 10),
+            (2, 'Chicken & Fish', '/assets/categories/chicken_fish.png', 20),
+            (3, 'Breakfast', '/assets/categories/breakfast.png', 30),
+            (4, 'Fries & Sides', '/assets/categories/sides.png', 40),
+            (5, 'Beverages', '/assets/categories/beverages.png', 50),
+            (6, 'Desserts & Shakes', '/assets/categories/desserts.png', 60),
+            (7, 'McCafé', '/assets/categories/mccafe.png', 70),
+            (8, 'Happy Meal', '/assets/categories/happy_meal.png', 80),
+            (9, 'Shareables & Nuggets', '/assets/categories/shareables.png', 90);`;
 
     try{
         await pool.query(query);

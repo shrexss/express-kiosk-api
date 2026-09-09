@@ -30,6 +30,8 @@ exports.resetAllDatabase = async (req, res) => {
     try {
         connection = await pool.getConnection();
 
+        await connection.beginTransaction();
+
         await connection.query('SET FOREIGN_KEY_CHECKS = 0;');
 
         await connection.query(`
@@ -58,8 +60,13 @@ exports.resetAllDatabase = async (req, res) => {
         await createMeals_ProductsData(connection);
         await createProducts_IngredientsData(connection);
 
+        await connection.commit();
+
         return res.status(200).json({ message: 'Entire database reset successfully' });
     } catch (err) {
+        if (connection) {
+            await connection.rollback().catch(() => {});
+        }
         console.error('Full Database Reset Error:', err);
         return res.status(500).json({ error: 'Failed to reset database', details: err.message });
     } finally {
