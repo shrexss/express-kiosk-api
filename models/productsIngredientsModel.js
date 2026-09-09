@@ -108,11 +108,7 @@ exports.createProducts_IngredientsData = async (pool) => {
         (55, 11, 26, 1, 40),-- Butter
 
         -- Medium Fries (Product 15)
-        (56, 15, 27, 1, 10),-- Potato Cuts
-
-        -- McFlurry OREO (Product 21)
-        (57, 21, 28, 1, 10),-- Soft Serve
-        (58, 21, 29, 2, 20);-- OREO Pieces`;
+        (56, 15, 27, 1, 10);-- Potato Cuts`;
 
     try {
         await pool.query(query);

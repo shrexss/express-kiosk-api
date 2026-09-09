@@ -1,15 +1,15 @@
 const path = require('path');
+const fs = require('fs');
 
 exports.getImage = (req, res) => {
     try{
-        const imageName = req.params.imageName;
-
-        const imagePath = path.join(__dirname, '..', 'images', `${imageName}`);
-
-        res.type('image/jpeg');
+        const imagePath = path.join(__dirname, '..', req.params.imagePath[0], req.params.imagePath[1], req.params.imagePath[2]);
+        
+        if (!fs.existsSync(imagePath)) {
+            return res.status(404).json({ error: "Image not found" });
+        }
         return res.sendFile(imagePath, (err) => {
-            if (err) {
-                res.type('json');
+            if (err && !res.headersSent) {
                 return res.status(404).json({ error: "Image not found" });
             }
         });

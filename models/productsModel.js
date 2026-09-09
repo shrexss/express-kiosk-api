@@ -73,10 +73,7 @@ exports.createProductsData = async (pool) => {
 
         -- Happy Meal Items
         (27, 8, '4 Pc. Chicken McNuggets', '/assets/products/nuggets_4.png', 2.99, 10),
-
-        -- Shareables
-        (28, 9, '10 Pc. Chicken McNuggets', '/assets/products/nuggets_10.png', 5.49, 10),
-        (29, 9, '20 Pc. Chicken McNuggets', '/assets/products/nuggets_20.png', 8.99, 20);`;
+        (28, 8, '10 Pc. Chicken McNuggets', '/assets/products/nuggets_10.png', 4.99, 10);`;
 
     try {
         await pool.query(query);

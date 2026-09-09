@@ -133,6 +133,13 @@ const docs = {
             "description": "delete one product (requires jwt)"
         }
     ],
+    "selected_product": [
+        {
+            "method": "GET",
+            "path": ".../selected_product/{id}",
+            "description": "return selected product"
+        }
+    ],
     "ingredients": [
         {
             "method": "GET",
@@ -217,7 +224,7 @@ const docs = {
     "images": [
         {
             "method": "GET",
-            "path": ".../images/{imageName}",
+            "path": ".../images/{image_path}",
             "description": "return image"
         },
     ],
