@@ -1,24 +1,24 @@
 const { rateLimit } = require('express-rate-limit');
 
 const defaultLimiter = rateLimit({
-    windowMs: 10 * 60000, // 10min
-    limit: 100,
+    windowMs: 5 * 60000, // 5min
+    limit: 250,
     message: {
         status: 429,
         error: 'Too many requests!'
     }
 });
 const calmLimiter = rateLimit({
-    windowMs: 10 * 60000, // 10min
-    limit: 400,
+    windowMs: 5 * 60000, // 5min
+    limit: 500,
     message: {
         status: 429,
         error: 'Too many requests!'
     }
 });
 const strictLimiter = rateLimit({
-    windowMs: 10 * 60000, // 10min
-    limit: 10,
+    windowMs: 5 * 60000, // 5min
+    limit: 25,
     message: {
         status: 429,
         error: 'Too many requests!'

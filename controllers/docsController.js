@@ -19,33 +19,8 @@ const docs = {
         },
         {
             "method": "POST",
-            "path": ".../tables/reset_categories",
-            "description": "reset categories to default data (requires jwt)"
-        },
-        {
-            "method": "POST",
-            "path": ".../tables/reset_meals",
-            "description": "reset meals to default data (requires jwt)"
-        },
-        {
-            "method": "POST",
-            "path": ".../tables/reset_products",
-            "description": "reset products to default data (requires jwt)"
-        },
-        {
-            "method": "POST",
-            "path": ".../tables/reset_ingredients",
-            "description": "reset ingredients to default data (requires jwt)"
-        },
-        {
-            "method": "POST",
-            "path": ".../tables/reset_meals_products",
-            "description": "reset meals_products to default data (requires jwt)"
-        },
-        {
-            "method": "POST",
-            "path": ".../tables/reset_products_ingredients",
-            "description": "reset products_ingredients to default data (requires jwt)"
+            "path": ".../tables/reset_DB",
+            "description": "reset whole database to default (requires jwt)"
         },
     ],
     "users": [
@@ -123,6 +98,13 @@ const docs = {
             "path": ".../meals/{id}",
             "description": "delete one meal (requires jwt)"
         },
+    ],
+    "selected_meal": [
+        {
+            "method": "GET",
+            "path": ".../selected_meal/{id}",
+            "description": "return selected meal"
+        }
     ],
     "products": [
         {
@@ -231,6 +213,13 @@ const docs = {
             "path": ".../products_ingredients/{id}",
             "description": "delete one products_ingredients (requires jwt)"
         }
+    ],
+    "images": [
+        {
+            "method": "GET",
+            "path": ".../images/{imageName}",
+            "description": "return image"
+        },
     ],
 
 }

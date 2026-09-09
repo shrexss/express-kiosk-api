@@ -37,6 +37,8 @@ const productsIngredientsRoutes = require('./routes/productsIngredientsRoutes');
 
 const imagesRoutes = require('./routes/imagesRoutes');
 
+const selectedMealRoutes = require('./routes/selectedMealRoutes');
+
 // EXPRESS
 app.use(express.json());
 
@@ -74,6 +76,8 @@ app.use('/meals_products', mealsProductsRoutes);
 app.use('/products_ingredients', productsIngredientsRoutes);
 
 app.use('/images', calmLimiter, imagesRoutes);
+
+app.use('/selected_meal', selectedMealRoutes);
 
 // START
 app.listen(PORT, () => {

@@ -1,10 +1,10 @@
 const pool = require('../db/db');
-const { createCategoriesData } = require('../models/categoriesModel');
-const { createMealsData } = require('../models/mealsModel');
-const { createProductsData } = require('../models/productsModel');
-const { createIngredientsData } = require('../models/ingredientsModel');
-const { createMeals_ProductsData } = require('../models/mealsProductsModel');
-const { createProducts_IngredientsData } = require('../models/productsIngredientsModel');
+const { createCategoriesTable, createCategoriesData } = require('../models/categoriesModel');
+const { createMealsTable, createMealsData } = require('../models/mealsModel');
+const { createProductsTable ,createProductsData } = require('../models/productsModel');
+const { createIngredientsTable, createIngredientsData } = require('../models/ingredientsModel');
+const { createMeals_ProductsTable, createMeals_ProductsData } = require('../models/mealsProductsModel');
+const { createProducts_IngredientsTable, createProducts_IngredientsData } = require('../models/productsIngredientsModel');
 
 exports.getAllTables = async (req, res) => {
     try{
@@ -25,92 +25,47 @@ exports.getAllTables = async (req, res) => {
     }
 }
 
-exports.resetCategories = async (req, res) => {
-    try{
-        await pool.query('SET FOREIGN_KEY_CHECKS = 0;');
+exports.resetAllDatabase = async (req, res) => {
+    let connection;
+    try {
+        connection = await pool.getConnection();
 
-        await pool.query('TRUNCATE TABLE categories;');
+        await connection.query('SET FOREIGN_KEY_CHECKS = 0;');
 
-        await pool.query('SET FOREIGN_KEY_CHECKS = 1;');
-        await createCategoriesData(pool);
+        await connection.query(`
+            DROP TABLE IF EXISTS 
+                products_ingredients, 
+                meals_products, 
+                ingredients, 
+                products, 
+                meals, 
+                categories;
+        `);
 
-        return res.status(200).json('Reset succesfully');
-    }catch(err){
-        return res.status(500).json( { error: 'Internal server error'});
+        await connection.query('SET FOREIGN_KEY_CHECKS = 1;');
+
+        await createCategoriesTable(connection);
+        await createIngredientsTable(connection);
+        await createProductsTable(connection);
+        await createMealsTable(connection);
+        await createMeals_ProductsTable(connection);
+        await createProducts_IngredientsTable(connection);
+
+        await createCategoriesData(connection);
+        await createIngredientsData(connection);
+        await createProductsData(connection);
+        await createMealsData(connection);
+        await createMeals_ProductsData(connection);
+        await createProducts_IngredientsData(connection);
+
+        return res.status(200).json({ message: 'Entire database reset successfully' });
+    } catch (err) {
+        console.error('Full Database Reset Error:', err);
+        return res.status(500).json({ error: 'Failed to reset database', details: err.message });
+    } finally {
+        if (connection) {
+            await connection.query('SET FOREIGN_KEY_CHECKS = 1;').catch(() => {});
+            connection.release();
+        }
     }
-}
-
-exports.resetMeals = async (req, res) => {
-    try{
-        await pool.query('SET FOREIGN_KEY_CHECKS = 0;');
-
-        await pool.query('TRUNCATE TABLE meals;');
-
-        await pool.query('SET FOREIGN_KEY_CHECKS = 1;');
-        await createMealsData(pool);
-
-        return res.status(200).json('Reset succesfully');
-    }catch(err){
-        return res.status(500).json( { error: 'Internal server error'});
-    }
-}
-
-exports.resetProducts = async (req, res) => {
-    try{
-        await pool.query('SET FOREIGN_KEY_CHECKS = 0;');
-
-        await pool.query('TRUNCATE TABLE products;');
-
-        await pool.query('SET FOREIGN_KEY_CHECKS = 1;');
-        await createProductsData(pool);
-
-        return res.status(200).json('Reset succesfully');
-    }catch(err){
-        return res.status(500).json( { error: 'Internal server error'});
-    }
-}
-
-exports.resetIngredients = async (req, res) => {
-    try{
-        await pool.query('SET FOREIGN_KEY_CHECKS = 0;');
-
-        await pool.query('TRUNCATE TABLE ingredients;');
-
-        await pool.query('SET FOREIGN_KEY_CHECKS = 1;');
-        await createIngredientsData(pool);
-
-        return res.status(200).json('Reset succesfully');
-    }catch(err){
-        return res.status(500).json( { error: 'Internal server error'});
-    }
-}
-
-exports.resetMealsProducts = async (req, res) => {
-    try{
-        await pool.query('SET FOREIGN_KEY_CHECKS = 0;');
-
-        await pool.query('TRUNCATE TABLE meals_products;');
-
-        await pool.query('SET FOREIGN_KEY_CHECKS = 1;');
-        await createMeals_ProductsData(pool);
-
-        return res.status(200).json('Reset succesfully');
-    }catch(err){
-        return res.status(500).json( { error: 'Internal server error'});
-    }
-}
-
-exports.resetProductsIngredients = async (req, res) => {
-    try{
-        await pool.query('SET FOREIGN_KEY_CHECKS = 0;');
-
-        await pool.query('TRUNCATE TABLE products_ingredients;');
-
-        await pool.query('SET FOREIGN_KEY_CHECKS = 1;');
-        await createProducts_IngredientsData(pool);
-
-        return res.status(200).json('Reset succesfully');
-    }catch(err){
-        return res.status(500).json( { error: 'Internal server error'});
-    }
-}
+};
