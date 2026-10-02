@@ -46,22 +46,22 @@ app.use(express.json());
 // MIDDLEWARE
 app.use(helmet());
 app.use(defaultLimiter);
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin) {
-            return NODE_ENV === 'development' 
-                ? callback(null, true) 
-                : callback(null, false); 
-        }
+// app.use(cors({
+//     origin: (origin, callback) => {
+//         if (!origin) {
+//             return NODE_ENV === 'development' 
+//                 ? callback(null, true) 
+//                 : callback(null, false); 
+//         }
 
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(null, false);
-        }
-    },
-    credentials: true
-}));
+//         if (allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             callback(null, false);
+//         }
+//     },
+//     credentials: true
+// }));
 
 // ROUTES
 app.use('/', calmLimiter, docsRoutes);
