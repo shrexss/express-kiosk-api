@@ -62,6 +62,7 @@ app.use(defaultLimiter);
 //     },
 //     credentials: true
 // }));
+app.use(cors());
 
 // ROUTES
 app.use('/', calmLimiter, docsRoutes);
